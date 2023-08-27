@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.6.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/c3d3cabb8b.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pColor: '#233040',
+                        sColor: '#FDDA06',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#F5F5F5]">
+
+<!-- header Section -->
+
+    <header class="">
+
+<!-- Upper Navbar -->
+
+        <nav class="bg-pColor  flex py-6 xl:px-60 md:px-8 sm:px-4 p-2 justify-between">
+
+<!-- Brand logo -->
+
+                <img id="brandLogo" class=" cursor-pointer  lg:w-auto w-44" src="./images/Brandlogo.png" alt="Brand Logo">
+
+<!-- Search Box -->
+
+            <div id="searchBox" class="lg:flex justify-center items-center w-full  hidden">
+                <input class="rounded-lg  p-3 mr-4 md:w-[50%] w-full" type="search" name="" id="" placeholder="Search Product Here...">
+                <input class="btn bg-sColor hover:bg-sColor " type="button" value="Search">
+                <i id="cancelSearchBox" class="ms-4 lg:hidden  fa-solid fa-x fa-lg group-hover:text-sColor text-white" ></i>
+            </div>
+
+<!-- iconic Menus -->
+
+            <div id="upperMenus" class="flex gap-7 lg:scale-100 scale-75">
+                <div id="searchButton" class="flex flex-col justify-center items-center group cursor-pointer">
+                    <i class="lg:hidden fa-solid fa-magnifying-glass fa-xl group-hover:text-sColor text-white" ></i>
+                </div>
+                <div class="text-white flex flex-col justify-center items-center group cursor-pointer">
+                    <div class="relative">
+                        
+                        <i class="fa-regular fa-user fa-xl group-hover:text-sColor text-white" ></i>
+
+                        <div class="badge absolute w-5 -top-3 -right-2 bg-sColor">
+                            <p class="text-sm font-bold">1</p>
+                        </div>
+                    </div>
+                    <h1 class="md:block hidden font-semibold group-hover:text-sColor">Account</h1>
+                </div>
+                <div class="text-white flex flex-col justify-center items-center group cursor-pointer">
+                    <div class="relative">
+                        
+                        <i class="fa-regular fa-heart fa-xl group-hover:text-sColor text-white" ></i>
+
+                        <div class="badge absolute w-5 -top-3 -right-2 bg-sColor">
+                            <p class="text-sm font-bold">1</p>
+                        </div>
+                    </div>
+                    <h1 class="md:block hidden font-semibold group-hover:text-sColor">Wishlist</h1>
+                </div>
+
+                <div class="text-white flex flex-col justify-center w-max items-center group cursor-pointer">
+                    <div class="relative">
+                        <i class="fa-solid  fa-xl fa-cart-shopping group-hover:text-sColor text-white"></i>
+                        <div class="badge absolute w-5 -top-3 -right-2 bg-sColor">
+                            <p class="text-sm font-bold">1</p>
+                        </div>
+                    </div>
+                    <h1 class="md:block hidden font-semibold group-hover:text-sColor">My Cart</h1>
+                </div>
+            </div>
+        </nav>
+
+<!-- Down Navbar -->
+
+        <nav class="bg-pColor flex justify-between items-center xl:px-60 lg:12 sm:px-10 py-7 ">
+
+<!-- Down Nav Menus -->
+            
+            <div class="dropdown lg:hidden">
+                <label tabindex="0" class="btn btn-ghost lg:hidden">
+                    <i class="fa-solid fa-xl fa-bars text-white"></i>
+                </label>
+                <ul tabindex="0" class="menu space-y-2 menu-sm dropdown-content mt-3 z-[1]  py-3 px-7 shadow bg-base-100 font-semibold rounded-md ">
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-s-2 border-pColor ps-2">HOME</li>
+                    <hr>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-s-2 border-pColor ps-2">CONTACT</li>
+                    <hr>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-s-2 border-pColor ps-2">ABOUT</li>
+                    <hr>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-s-2 border-pColor ps-2">BLOG</li>
+                </ul>
+            </div>
+
+            <div class=" hidden lg:block">
+                <ul class="flex list-none font-semibold gap-8 text-white">
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-b-2 border-pColor" >HOME</li>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-b-2 border-pColor">CONTACT</li>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-b-2 border-pColor">ABOUT</li>
+                    <li class="cursor-pointer hover:text-sColor hover:border-sColor border-b-2 border-pColor">BLOG</li>
+                </ul>
+            </div>
+
+<!-- Need Help Section -->
+
+            <div class="text-white px-4">
+                <h1>Need Help? <span id="helpCountryCode">(+880)</span> <span id="helpNumber">123-456-789</span></h1>
+            </div>
+        </nav>
+        
+    </header>
+    <main class="flex flex-col lg:flex-row gap-6 lg:mx-60">
+        <div class="max-w-[300px] mx-auto flex flex-col justify-center">
+
+<!-- Shop By Categories Section -->
+
+            <div tabindex="0" class="mx-auto mt-4 collapse collapse-arrow  w-max rounded-md  bg-sColor">
+                <input type="checkbox" id="peer" class="peer" checked>
+                <div class="collapse-title text-xl font-medium flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-bars"></i>
+                    <h1>SHOP BY CATEGORIES</h1>
+                </div>
+                <div class="peer-checked:collapse-content   bg-white collapse-content"> 
+                    <ul class="space-y-3 items-center font-semibold">
+                        <li class="cursor-pointer hover:text-sColor">Category 1</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 2</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 3</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 1</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 2</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 3</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 1</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 2</li>
+                        <hr>
+                        <li class="cursor-pointer hover:text-sColor">Category 3</li>
+                    </ul>
+                </div>
+            </div>
+
+<!-- Our Services Section -->
+
+            <div class="mt-6 p-3 bg-white rounded-md">
+                <div class="flex justify-between items-center gap-2 p-4">
+                    <i class="fa-solid fa-truck fa-2xl"></i>
+                    <div>
+                        <h1 class="font-bold text-lg">FAST DELIVERY</h1>
+                        <p>Our Fast Deliver Service</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="flex justify-between items-center gap-2 p-4">
+                    <i class="fa-solid fa-headphones-simple fa-2xl"></i>
+                    <div>
+                        <h1 class="font-bold text-lg">24/7 SERVICE</h1>
+                        <p>Our Fast Deliver Service</p>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center gap-2 p-4">
+                    <i class="fa-solid fa-leaf fa-2xl"></i>
+                    <div>
+                        <h1 class="font-bold text-lg">QUALITY PRODUCT</h1>
+                        <p>Our Fast Deliver Service</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="flex justify-between items-center gap-2 p-4">
+                    <i class="fa-regular fa-face-smile-beam fa-2xl"></i>
+                    <div>
+                        <h1 class="font-bold text-lg">BEST SATISFACTION</h1>
+                        <p>Our Fast Deliver Service</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+<!-- AD Section -->
+
+            <div class="mt-6 overflow-hidden rounded-md">
+                <img class="rounded-md  hover:scale-105 duration-200" src="./images/ads(1).png" alt="">
+            </div>
+
+        </div>
+
+<!-- main Content Space -->
+
+        <div class="flex-1 mx-4">
+
+<!-- carousel Section -->
+
+            <div>
+                <div class="carousel mt-4 rounded-md w-full">
+                    <div id="slide1" class="carousel-item relative w-full group">
+                      <img src="./images/Carousel(1).png" class="w-full" />
+                      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                        <a href="#slide4" class="btn border-0 hover:bg-sColor bg-sColor group-hover:translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❮</a> 
+                        <a href="#slide2" class="btn border-0 hover:bg-sColor bg-sColor group-hover:-translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❯</a>
+                      </div>
+                      <div class="flex items-center justify-center gap-1 bottom-0 pb-3 absolute w-full">
+                        <div class="badge border-0 bg-sColor badge-sm"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                      </div> 
+                    </div> 
+                    <div id="slide2" class="carousel-item relative w-full group">
+                      <img src="./images/Carousel(2).png" class="w-full" />
+                      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                        <a href="#slide1" class="btn border-0 hover:bg-sColor bg-sColor group-hover:translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❮</a> 
+                        <a href="#slide3" class="btn border-0 hover:bg-sColor bg-sColor group-hover:-translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❯</a>
+                      </div>
+                      <div class="flex items-center justify-center gap-1 bottom-0 pb-3 absolute w-full">
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 bg-sColor badge-sm"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                      </div>
+                    </div> 
+                    <div id="slide3" class="carousel-item relative w-full group">
+                      <img src="./images/Carousel(1).png" class="w-full" />
+                      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                        <a href="#slide2" class="btn border-0 hover:bg-sColor bg-sColor group-hover:translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❮</a> 
+                        <a href="#slide4" class="btn border-0 hover:bg-sColor bg-sColor group-hover:-translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❯</a>
+                      </div>
+                      <div class="flex items-center justify-center gap-1 bottom-0 pb-3 absolute w-full">
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 bg-sColor badge-sm"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                      </div>
+                    </div> 
+                    <div id="slide4" class="group carousel-item relative w-full">
+                      <img src="./images/Carousel(2).png" class="w-full " />
+                      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                        <a href="#slide3" class="btn border-0 hover:bg-sColor bg-sColor group-hover:translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❮</a> 
+                        <a href="#slide1" class="btn border-0 hover:bg-sColor bg-sColor group-hover:-translate-x-6 opacity-0 group-hover:opacity-100 duration-200 btn-circle">❯</a>
+                      </div>
+                      <div class="flex items-center justify-center gap-1 bottom-0 pb-3 absolute w-full">
+                        <div class="badge border-0  badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 badge-xs"></div>
+                        <div class="badge border-0 bg-sColor badge-sm"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row justify-between">
+                <div class="mt-6 overflow-hidden rounded-md">
+                    <img class="rounded-md  hover:scale-105 duration-200" src="./images/ads(2).png" alt="">
+                </div>
+                <div class="mt-6 overflow-hidden rounded-md">
+                    <img class="rounded-md  hover:scale-105 duration-200" src="./images/ads(3).png" alt="">
+                </div>
+            </div>
+        </div>
+    </main>
+
+<!-- scripting Links -->
+
+    <script src="./nav.js"></script>
+</body>
+</html>

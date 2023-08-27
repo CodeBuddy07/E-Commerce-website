@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.6.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for the dropdown */
+        .dropdown-content {
+            display: none;
+        }
+        
+        .dropdown-btn:checked ~ .dropdown-content {
+            display: block;
+        }
+    </style>
+    <title>Dropdown Menu without JS</title>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="relative">
+        <input type="checkbox" id="dropdownBtn" class="hidden dropdown-btn:checked">
+        <label for="dropdownBtn" class="btn btn-primary">
+            Dropdown
+            <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </label>
+        <div class="dropdown-content mt-2 w-40 bg-white rounded-md shadow-lg">
+            <ul class="py-1">
+                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 1</a></li>
+                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 2</a></li>
+                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 3</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
