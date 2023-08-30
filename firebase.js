@@ -40,6 +40,7 @@ submitButton.addEventListener('click', function () {
 
 function readURL(input) {
     // if (input.files && input.files[0]) {
+        document.getElementById('productImg').setAttribute('src', input.value)
         console.log(input.value)
     //   var reader = new FileReader();
     //   reader.onload = function (e) {
@@ -48,6 +49,11 @@ function readURL(input) {
     //   reader.readAsDataURL(input.files[0]);
     // }
   }
+
+  var loadFile = function(event) {
+    var image = document.getElementById('productImg');
+    image.src = URL.createObjectURL(event.target.files[0]);
+};
 
 // firebase.database().ref("New Data").set({"name2": "hol2435",roll : 45});
 
