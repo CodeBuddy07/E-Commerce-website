@@ -1,38 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.6.1/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom CSS for the dropdown */
-        .dropdown-content {
-            display: none;
+    <script src="https://kit.fontawesome.com/c3d3cabb8b.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pColor: '#233040',
+                        sColor: '#FDDA06',
+                    }
+                }
+            }
         }
-        
-        .dropdown-btn:checked ~ .dropdown-content {
-            display: block;
-        }
-    </style>
-    <title>Dropdown Menu without JS</title>
-</head>
-<body class="bg-gray-100 p-8">
-    <div class="relative">
-        <input type="checkbox" id="dropdownBtn" class="hidden dropdown-btn:checked">
-        <label for="dropdownBtn" class="btn btn-primary">
-            Dropdown
-            <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </label>
-        <div class="dropdown-content mt-2 w-40 bg-white rounded-md shadow-lg">
-            <ul class="py-1">
-                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 1</a></li>
-                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 2</a></li>
-                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Item 3</a></li>
-            </ul>
+    </script>
+</head class="bg-[#F5F5F5]">
+
+<body>
+
+    <!-- header Section -->
+
+    <header class="">
+
+        <!-- Upper Navbar -->
+
+        <nav class="bg-pColor  flex py-6 xl:px-60 md:px-8 sm:px-4 p-2 justify-between">
+
+            <!-- Brand logo -->
+
+            <img id="brandLogo" class=" cursor-pointer  lg:w-auto w-44" src="./images/Brandlogo.png" alt="Brand Logo">
+
+            <!-- Search Box -->
+
+            <div id="searchBox" class="lg:flex justify-center items-center lg:justify-end w-full  hidden">
+                <input class="rounded-lg  p-3 mr-4 md:w-[50%] w-full" type="search" name="" id=""
+                    placeholder="Search Product Here...">
+                <input class="btn bg-sColor hover:bg-sColor " type="button" value="Search">
+                <i id="cancelSearchBox"
+                    class="ms-4 lg:hidden  fa-solid fa-x fa-lg group-hover:text-sColor text-white"></i>
+            </div>
+
+            <!-- iconic Menus -->
+            <div id="searchButton" class="flex flex-col justify-center items-center group cursor-pointer">
+                <i class="lg:hidden fa-solid fa-magnifying-glass fa-xl group-hover:text-sColor text-white"></i>
+            </div>
+
+
+
+            <!-- Down Navbar -->
+
+
+    </header>
+    <main class="flex flex-col lg:flex-row p-5 gap-6 xl:mx-60">
+
+        <div class="flex-1">
+            <div class="form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text-alt text-lg font-semibold">Upload your default product image.</span>
+                </label>
+                <input type="file" onchange="readURL(this)" accept="image/jpeg, image/png, image/jpg" class="file-input file-input-bordered w-full max-w-xs" />
+                <label class="label">
+                    <span class="label-text-alt">Reduce image size before Upload [Resolution: 928x548]</span>
+                </label>
+            </div>
+            <div class="form-control flex w-full ">
+                <label class="label">
+                    <span class="label-text-alt text-lg font-semibold">More Images</span>
+                </label>
+                <input type="file" class="file-input file-input-bordered scale-75 max-w-xs" />
+                <input type="file" class="file-input file-input-bordered scale-75 max-w-xs" />
+                <input type="file" class="file-input file-input-bordered scale-75 max-w-xs" />
+
+            </div>
+
+            <div class=" form-control min-w-md max-w-md">
+                <label class="label">
+                    <span class="label-text text-xl font-semibold">Product name?</span>
+                </label>
+                <input id="productName" type="text" placeholder="Type here" class="input input-bordered w-full " />
+                <label class="label">
+                    <span class="label-text-alt">eg. Smart watch</span>
+                </label>
+            </div>
+            <div class="form-control w-full min-w-md max-w-md">
+                <label class="label">
+                    <span class="label-text text-xl font-semibold">Product Price?</span>
+                </label>
+                <div class="flex gap-3 justify-center items-center">
+                    <input id="productPrice" type="number" placeholder="Type here"
+                        class="input input-bordered w-full " />
+                    <h1 class="font-semibold text-lg">TK</h1>
+                </div>
+                <label class="label">
+                    <span id="demo" class="label-text-alt">eg. 100</span>
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text text-xl font-semibold">Product Description?</span>
+                </label>
+                <textarea class="textarea textarea-bordered h-24" placeholder="Product description"></textarea>
+                <label class="label">
+                  <span class="label-text-alt">eg. New Desing Soft & Comfortable T-shirt For Men</span>
+                </label>
+              </div>
+
+            <div class="flex justify-start items-center gap-2 w-full my-7">
+                <button id="submitButton" class="btn btn-success w-max" type="submit">SUBMIT</button>
+                <button id="previewButton" class="btn btn-warning w-max" type="submit">Preview</button>
+            </div>
+
         </div>
-    </div>
+        <div class="flex-1 flex justify-center items-center">
+            <div class="card w-96 bg-base-100 shadow-xl">
+                <figure class=" overflow-hidden h-[226px]">
+                    <img id="productImg" class="w-[334px] " src="./images/demoProducts.png" alt="Shoes" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="w-max card-title">Shoes!</h2>
+                    <p >Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <h2 class="text-lg font-semibold "> <span class="font-extrabold text-yellow-400 text-2xl">৳</span> <span>780</span> TK</h2>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- scripting Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="./firebase.js"></script>
 </body>
+
 </html>
