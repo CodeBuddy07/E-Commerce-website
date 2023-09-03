@@ -15,50 +15,266 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 var submitButton = document.getElementById('submitButton');
+var previewButton = document.getElementById('previewButton');
 var productName = document.getElementById('productName');
+var productNameError = document.getElementById('productNameErrorText');
 var productPrice = document.getElementById('productPrice');
+var productPriceError = document.getElementById('productPriceErrorText');
+var productCode = document.getElementById('productCode');
+var productCodeError = document.getElementById('productCodeErrorText');
+var productDescription = document.getElementById('productDescription');
+var productDescriptionError = document.getElementById('productDescriptionErrorText');
+var productImage = document.getElementById('productImage');
+var extraProductImage1 = document.getElementById('extraProductImage1');
+var extraProductImage2 = document.getElementById('extraProductImage2');
+var extraProductImage3 = document.getElementById('extraProductImage3');
+var TextAreaLength = document.getElementById('textAreaLength');
+
+productName.onkeyup = function () { productNameError.innerText = '' };
+productPrice.onkeyup = function () { productPriceError.innerText = '' };
+productDescription.onkeyup = function () {
+    productDescriptionError.innerText = ''
+    TextAreaLength.innerText = productDescription.value.length;
+};
+productCode.onkeyup = function () {
+    productCodeError.innerText = '';
+
+};
+
 
 submitButton.addEventListener('click', function () {
-    if (productName.value === '' || productPrice === '') {
-        alert('input Fields Are Empty')
+    if (productCode.value !== '') {
+
+        if (productName.value !== '') {
+
+            if (productPrice.value !== '') {
+
+                if (productDescription.value !== '') {
+
+                    if (productCode.value.length >= 4) {
+
+                        if (parseFloat(productPrice.value) > 0) {
+
+                            if (productImage.value !== '') {
+
+                                firebase.storage().ref("Product_Images/" + productImage.files[0].name).put(productImage.files[0]).then(function(){
+                                    firebase.storage().ref("Product_Images/" + productImage.files[0].name).getDownloadURL().then(function (url) {
+
+                                        firebase.database().ref("BlackPearl").once('value', (snapshot) => {
+
+                                            var data = snapshot.val();
+                                            var ProductCodes = Object.keys(data)
+
+                                            if (data !== null) {
+
+                                                
+                                                if (ProductCodes.includes(productCode.value)) {
+                                                    showAlert('Error Massage', 'Product Key Already Used', 'text-red-400')
+                                                } else {
+
+                                                    firebase.database().ref("BlackPearl/" + productCode.value).set({
+                                                        defaultImageURL: url,
+                                                        Name: productName.value,
+                                                        Price: productPrice.value,
+                                                        Description: productDescription.value,
+                                                    })
+
+                                                    if (extraProductImage1.files[0] !== undefined) {
+
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage1.files[0].name).put(extraProductImage1.files[0]).then(function(){
+                                                            firebase.storage().ref("Product_Images/" + extraProductImage1.files[0].name).getDownloadURL().then(function (url1) {
+                                                                firebase.database().ref("BlackPearl/" + productCode.value).update({
+    
+                                                                    ExtraImageURL1: url1,
+                                                                });
+                                                            })
+                                                    });
+                                                        
+
+                                                    }
+
+
+                                                    if (extraProductImage2.files[0] !== undefined) {
+
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage2.files[0].name).put(extraProductImage2.files[0]).then(function(){
+                                                            firebase.storage().ref("Product_Images/" + extraProductImage2.files[0].name).getDownloadURL().then(function (url2) {
+                                                                firebase.database().ref("BlackPearl/" + productCode.value).update({
+    
+                                                                    ExtraImageURL2: url2,
+                                                                });
+                                                            })
+                                                    });
+                                                        
+                                                    }
+
+                                                    if (extraProductImage3.files[0] !== undefined) {
+
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage3.files[0].name).put(extraProductImage3.files[0]).then(function(){
+                                                            firebase.storage().ref("Product_Images/" + extraProductImage3.files[0].name).getDownloadURL().then(function (url3) {
+                                                                firebase.database().ref("BlackPearl/" + productCode.value).update({
+    
+                                                                    ExtraImageURL3: url3,
+                                                                });
+                                                            })
+                                                    });
+                                                        
+                                                    }
+
+                                                    showAlert('Successful!', 'Your Product Added Successfully', 'text-green-400')
+                                                }
+                                            }else{
+                                                console.log('Data Empty')
+                                            }
+
+
+                                        })
+                                    })
+                                });
+
+
+
+
+                            } else {
+                                showAlert('Default Product Image Is Required.', "Error Massage!", "text-red-400");
+                            }
+
+                        } else {
+                            productPriceError.innerText = '*Numbers Positive Only';
+                        }
+
+                    } else {
+                        productCodeError.innerText = '*Minimum 4 Character';
+                    }
+
+                } else {
+                    productDescriptionError.innerText = '*Input Field is Empty';
+                }
+            } else {
+                productPriceError.innerText = '*Input Field is Empty';
+            }
+        } else {
+            productNameError.innerText = '*Input Field is Empty';
+        }
+    } else {
+        productCodeError.innerText = '*Input Field is Empty';
     }
-    else if (productName.value == 'x' && productPrice.value == 'y') {
-        firebase.database().ref('BlackPearl').once('value', (keys) => {
-            var data = keys.val();
-            document.getElementById('demo').innerText = data.Name;
-        });
-        ;
+
+
+});
+
+const getMeta = async (url) => {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    return img
+};
+
+var loadDefaultImage = function (event) {
+    getMeta(URL.createObjectURL(event.target.files[0])).then(img => {
+        if (img.naturalWidth / img.naturalHeight == 16 / 9) {
+            var image = document.getElementById('productImg');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+        else {
+            showAlert('Image Resolution Not Matched. [ Ratio: 16:9 ]', "Error Massage!", "text-red-400");
+
+            document.getElementById('productImage').value = '';
+        }
+    });
+
+};
+
+var loadExtraImage = function (event) {
+    getMeta(URL.createObjectURL(event.target.files[0])).then(img => {
+        if (img.naturalWidth / img.naturalHeight == 16 / 9) {
+            showAlert('Image Resolution Not Matched. [ Ratio: 16:9 ]', "Error Massage!", "text-red-400");
+            event.target.value = '';
+        }
+    });
+
+};
+
+function loadProductPreview(input, preview) {
+    var inputField = document.getElementById(input);
+    if (inputField.value !== '') {
+        document.getElementById(preview).innerText = inputField.value;
+    } else {
+        document.getElementById(preview).innerText = 'Null';
     }
-    else {
-        firebase.database().ref("BlackPearl").set({
-            Name: productName.value,
-            Price: productPrice.value
-        });
-        console.log(productName)
-    }
+
+}
+
+previewButton.addEventListener('click', function () {
+    // console.log(firebase.database().ref("BlackPearl"))
+    firebase.database().ref("BlackPearl").once('value',function (snapshot) {
+        // console.log(snapshot)
+        console.log(snapshot.val())
+        // var data = snapshot.val();
+
+        // if (data !== null) {
+        //     var ProductCodes = Object.keys(data)
+        //     if (ProductCodes.includes('1233')) {
+        //         console.log('Goted')
+        //     } else {
+        //         console.log('No')
+        //     }
+        // }else{
+        //     console.log('Data is empty!')
+        // }
+
+    })
+
+
 })
 
-function readURL(input) {
-    // if (input.files && input.files[0]) {
-        document.getElementById('productImg').setAttribute('src', input.value)
-        console.log(input.value)
-    //   var reader = new FileReader();
-    //   reader.onload = function (e) {
-    //     document.getElementById('productImg').setAttribute('src', `.${e.target.result}`)
-    //   };
-    //   reader.readAsDataURL(input.files[0]);
-    // }
-  }
+function uploadImage(file) {
 
-  var loadFile = function(event) {
-    var image = document.getElementById('productImg');
-    image.src = URL.createObjectURL(event.target.files[0]);
-};
+}
+
+function showAlert(title, massage, color) {
+    const AlertBox = document.createElement('dialog');
+    AlertBox.setAttribute('id', 'my_modal_5');
+    AlertBox.setAttribute('class', 'modal modal-bottom sm:modal-middle');
+    AlertBox.innerHTML = `
+
+            <form method="dialog" class="${color} modal-box">
+                <h3 class="font-bold text-lg">${title}</h3>
+                <p class="py-4">*${massage}</p>
+                <div class="modal-action">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </div>
+            </form>
+    
+    `
+    document.getElementById('main').appendChild(AlertBox);
+    document.getElementById('my_modal_5').showModal();
+}
+
+
 
 // firebase.database().ref("New Data").set({"name2": "hol2435",roll : 45});
 
-// firebase.database().ref('New Data').once('value',(keys) => {var data = keys.val();
-// console.log(data.name);
-
+// firebase.database().ref('BlackPearl').once('value',(keys) => {var data = keys.val();
+// for(let i in data){
+//     console.log(data[i].Name);
+// }
+// });
 // console.log(keys.exists());
 // });
+// // firebase.database().ref('BlackPearl').once('value', (keys) => {
+//     var data = keys.val();
+//     document.getElementById('demo').innerText = data.Name;
+// });
+
+// firebase.database().ref("BlackPearl/"+productCode.value).set({
+//     ExtraImageURL1: url1,
+//     ExtraImageURL2: url2,
+//     ExtraImageURL3: url3,
+//     defaultImageURL: url,
+//     Name: productName.value,
+//     Price: productPrice.value,
+//     Description: productDescription.value,
+// })
+
+
