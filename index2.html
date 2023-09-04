@@ -50,18 +50,18 @@
         <div class="flex flex-col lg:flex-row gap-6">
             <div class="flex-1">
                 <div class="form-control w-full max-w-xs">
-                    <label class="label">
+                    <label for="productImage" class="label">
                         <span class="label-text-alt text-lg font-semibold">Upload your default product image.</span>
                     </label>
                     <input id="productImage" type="file" onchange="loadDefaultImage (event)"
                         accept="image/jpeg, image/png, image/jpg"
                         class="file-input file-input-bordered w-full max-w-xs" />
-                    <label class="label">
+                    <label for="productImage" class="label">
                         <span class="label-text-alt">Reduce image size before Upload [Ratio: 16:9]</span>
                     </label>
                 </div>
                 <div class="form-control flex w-full ">
-                    <label class="label">
+                    <label for="extraProductImage1" class="label">
                         <span class="label-text-alt text-lg font-semibold">More Images</span>
                     </label>
                     <input type="file" id="extraProductImage1" onchange="loadExtraImage (event)"
@@ -77,26 +77,26 @@
                 </div>
 
                 <div class=" form-control min-w-md max-w-md">
-                    <label class="label">
+                    <label for="productCode" class="label">
                         <span class="label-text text-xl font-semibold">Product Unique Code?</span>
                     </label>
                     <input id="productCode" type="text" placeholder="Type here" class="input input-bordered w-full " />
-                    <label class="label">
+                    <label for="productCode" class="label">
                         <span id="productCodeErrorText" class="label-text-alt text-red-400"></span>
                     </label>
                 </div>
                 <div class=" form-control min-w-md max-w-md">
-                    <label class="label">
+                    <label for="productName" class="label">
                         <span class="label-text text-xl font-semibold">Product name?</span>
                     </label>
                     <input id="productName" onchange="loadProductPreview('productName','pName')" type="text"
                         placeholder="Type here" class="input input-bordered w-full " />
-                    <label class="label">
+                    <label for="productName" class="label">
                         <span id="productNameErrorText" class="label-text-alt text-red-400"></span>
                     </label>
                 </div>
                 <div class="form-control w-full min-w-md max-w-md">
-                    <label class="label">
+                    <label for="productPrice" class="label">
                         <span class="label-text text-xl font-semibold">Product Price?</span>
                     </label>
                     <div class="flex gap-3 justify-center items-center">
@@ -104,17 +104,17 @@
                             placeholder="Type here" class="input input-bordered w-full " />
                         <h1 class="font-semibold text-lg">TK</h1>
                     </div>
-                    <label class="label">
+                    <label for="productPrice" class="label">
                         <span id="productPriceErrorText" class="label-text-alt text-red-400"></span>
                     </label>
                 </div>
                 <div class="form-control">
-                    <label class="label"> 
+                    <label for="productDescription" class="label"> 
                         <span class="label-text text-xl font-semibold">Product Short Description?</span>
                     </label>
                     <textarea maxlength="100" minlength="42" id="productDescription" onchange="loadProductPreview('productDescription','pDescription')"
                         class="textarea textarea-bordered h-24" placeholder="Product description"></textarea>
-                    <label class="label">
+                    <label for="productDescription" class="label">
                         <span id="productDescriptionErrorText" class="label-text-alt text-red-400"></span>
                         <span class="label-text-alt text-red-400"><span id="textAreaLength">0</span>/100</span>
                     </label>
@@ -133,11 +133,15 @@
                                 class="font-extrabold text-yellow-400 text-2xl">৳</span> <span id="pPrice">00</span> TK
                         </h2>
                         <div class="card-actions justify-end">
-                            <button id="buyButton" class="btn btn-primary">Buy Now</button>
+                            <button  id="buyButton" class="btn btn-primary">Buy Now</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="loadingIcon" class=" w-full hidden justify-center items-center my-10 text-yellow-400">
+            <span class="loading scale-125 loading-infinity loading-lg"></span>
         </div>
 
         <div class="flex justify-center items-center  gap-2 w-full my-7">

@@ -29,20 +29,29 @@ var extraProductImage1 = document.getElementById('extraProductImage1');
 var extraProductImage2 = document.getElementById('extraProductImage2');
 var extraProductImage3 = document.getElementById('extraProductImage3');
 var TextAreaLength = document.getElementById('textAreaLength');
+const LoadingIcon = document.getElementById('loadingIcon');
+
 
 productName.onkeyup = function () { productNameError.innerText = '' };
+
 productPrice.onkeyup = function () { productPriceError.innerText = '' };
+
 productDescription.onkeyup = function () {
     productDescriptionError.innerText = ''
     TextAreaLength.innerText = productDescription.value.length;
 };
+
 productCode.onkeyup = function () {
     productCodeError.innerText = '';
 
 };
 
 
+var done = false;
+
+
 submitButton.addEventListener('click', function () {
+    done = true;
     if (productCode.value !== '') {
 
         if (productName.value !== '') {
@@ -57,19 +66,22 @@ submitButton.addEventListener('click', function () {
 
                             if (productImage.value !== '') {
 
-                                firebase.storage().ref("Product_Images/" + productImage.files[0].name).put(productImage.files[0]).then(function(){
+                                LoadingIcon.classList.replace('hidden', 'flex');
+
+                                firebase.storage().ref("Product_Images/" + productImage.files[0].name).put(productImage.files[0]).then(function () {
                                     firebase.storage().ref("Product_Images/" + productImage.files[0].name).getDownloadURL().then(function (url) {
 
                                         firebase.database().ref("BlackPearl").once('value', (snapshot) => {
 
                                             var data = snapshot.val();
                                             var ProductCodes = Object.keys(data)
-
+                                            console.log(ProductCodes, ' ', productCode.value, ProductCodes.includes(productCode.value))
                                             if (data !== null) {
 
-                                                
+
                                                 if (ProductCodes.includes(productCode.value)) {
-                                                    showAlert('Error Massage', 'Product Key Already Used', 'text-red-400')
+                                                    showAlert('Error Massage!', 'Product Key Already Used.Try Different Product Key', 'text-red-400')
+                                                    LoadingIcon.classList.replace('flex', 'hidden');
                                                 } else {
 
                                                     firebase.database().ref("BlackPearl/" + productCode.value).set({
@@ -79,51 +91,58 @@ submitButton.addEventListener('click', function () {
                                                         Description: productDescription.value,
                                                     })
 
+                                                    
+
                                                     if (extraProductImage1.files[0] !== undefined) {
 
-                                                        firebase.storage().ref("Product_Images/" + extraProductImage1.files[0].name).put(extraProductImage1.files[0]).then(function(){
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage1.files[0].name).put(extraProductImage1.files[0]).then(function () {
                                                             firebase.storage().ref("Product_Images/" + extraProductImage1.files[0].name).getDownloadURL().then(function (url1) {
                                                                 firebase.database().ref("BlackPearl/" + productCode.value).update({
-    
+
                                                                     ExtraImageURL1: url1,
                                                                 });
                                                             })
-                                                    });
-                                                        
+                                                        });
+
 
                                                     }
 
 
                                                     if (extraProductImage2.files[0] !== undefined) {
 
-                                                        firebase.storage().ref("Product_Images/" + extraProductImage2.files[0].name).put(extraProductImage2.files[0]).then(function(){
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage2.files[0].name).put(extraProductImage2.files[0]).then(function () {
                                                             firebase.storage().ref("Product_Images/" + extraProductImage2.files[0].name).getDownloadURL().then(function (url2) {
                                                                 firebase.database().ref("BlackPearl/" + productCode.value).update({
-    
+
                                                                     ExtraImageURL2: url2,
                                                                 });
                                                             })
-                                                    });
-                                                        
+                                                        });
+
                                                     }
 
                                                     if (extraProductImage3.files[0] !== undefined) {
 
-                                                        firebase.storage().ref("Product_Images/" + extraProductImage3.files[0].name).put(extraProductImage3.files[0]).then(function(){
+                                                        firebase.storage().ref("Product_Images/" + extraProductImage3.files[0].name).put(extraProductImage3.files[0]).then(function () {
                                                             firebase.storage().ref("Product_Images/" + extraProductImage3.files[0].name).getDownloadURL().then(function (url3) {
                                                                 firebase.database().ref("BlackPearl/" + productCode.value).update({
-    
+
                                                                     ExtraImageURL3: url3,
                                                                 });
                                                             })
-                                                    });
-                                                        
+                                                        });
+
                                                     }
 
-                                                    showAlert('Successful!', 'Your Product Added Successfully', 'text-green-400')
+                                                    showAlert('Successful!', 'Your Product Added Successfully To The Database', 'text-green-400');
+                                                    LoadingIcon.classList.replace('flex', 'hidden');
+                                                    
+
                                                 }
-                                            }else{
-                                                console.log('Data Empty')
+
+
+                                            } else {
+                                                showAlert("Error Massage!", 'Firebase Empty Data Error.', "text-red-400");
                                             }
 
 
@@ -135,7 +154,7 @@ submitButton.addEventListener('click', function () {
 
 
                             } else {
-                                showAlert('Default Product Image Is Required.', "Error Massage!", "text-red-400");
+                                showAlert("Error Massage!", 'Default Product Image Is Required.', "text-red-400");
                             }
 
                         } else {
@@ -162,12 +181,18 @@ submitButton.addEventListener('click', function () {
 
 });
 
+
 const getMeta = async (url) => {
     const img = new Image();
     img.src = url;
     await img.decode();
-    return img
+    return img;
 };
+
+function Refresh(){
+    location.reload();
+}
+
 
 var loadDefaultImage = function (event) {
     getMeta(URL.createObjectURL(event.target.files[0])).then(img => {
@@ -176,7 +201,7 @@ var loadDefaultImage = function (event) {
             image.src = URL.createObjectURL(event.target.files[0]);
         }
         else {
-            showAlert('Image Resolution Not Matched. [ Ratio: 16:9 ]', "Error Massage!", "text-red-400");
+            showAlert("Error Massage!", 'Image Resolution Not Matched. [ Ratio: 16:9 ]', "text-red-400");
 
             document.getElementById('productImage').value = '';
         }
@@ -184,10 +209,13 @@ var loadDefaultImage = function (event) {
 
 };
 
+
 var loadExtraImage = function (event) {
     getMeta(URL.createObjectURL(event.target.files[0])).then(img => {
-        if (img.naturalWidth / img.naturalHeight == 16 / 9) {
-            showAlert('Image Resolution Not Matched. [ Ratio: 16:9 ]', "Error Massage!", "text-red-400");
+        console.log(img.naturalWidth / img.naturalHeight)
+        console.log(16 / 9)
+        if (img.naturalWidth / img.naturalHeight !== 16 / 9) {
+            showAlert("Error Massage!", 'Image Resolution Not Matched. [ Ratio: 16:9 ]', "text-red-400");
             event.target.value = '';
         }
     });
@@ -204,32 +232,28 @@ function loadProductPreview(input, preview) {
 
 }
 
-previewButton.addEventListener('click', function () {
-    // console.log(firebase.database().ref("BlackPearl"))
-    firebase.database().ref("BlackPearl").once('value',function (snapshot) {
-        // console.log(snapshot)
-        console.log(snapshot.val())
-        // var data = snapshot.val();
+previewButton.addEventListener('click', function (file) {
+    // // console.log(firebase.database().ref("BlackPearl"))
+    // firebase.database().ref("BlackPearl").once('value',function (snapshot) {
+    //     // console.log(snapshot)
+    //     console.log(snapshot.val())
+    //     var data = snapshot.val();
+    //         var ProductCodes = Object.keys(data)
 
-        // if (data !== null) {
-        //     var ProductCodes = Object.keys(data)
-        //     if (ProductCodes.includes('1233')) {
-        //         console.log('Goted')
-        //     } else {
-        //         console.log('No')
-        //     }
-        // }else{
-        //     console.log('Data is empty!')
-        // }
+    //     if (data !== null) {
+    //         if (ProductCodes.includes('AB01')) {
+    //             console.log('Goted')
+    //         } else {
+    //             console.log('No')
+    //         }
+    //     }else{
+    //         console.log('Data is empty!')
+    //     }
 
-    })
-
-
+    // })
+    console.log(done);
 })
 
-function uploadImage(file) {
-
-}
 
 function showAlert(title, massage, color) {
     const AlertBox = document.createElement('dialog');
@@ -242,7 +266,7 @@ function showAlert(title, massage, color) {
                 <p class="py-4">*${massage}</p>
                 <div class="modal-action">
                     <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
+                    <button onclick="Refresh()" class="btn">Close</button>
                 </div>
             </form>
     

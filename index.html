@@ -57,10 +57,10 @@
 
 
     </header>
-    <main class="flex flex-col gap-6 lg:mx-60">
+    <main class="flex flex-col gap-6 xl:mx-60">
 
         <!-- carousel Section -->
-        <div class="carousel mt-4 rounded-md w-full">
+        <div class="carousel mt-4  rounded-md w-full">
             <div id="slide1" class="carousel-item relative w-full group">
                 <img src="./images/Carousel(1).png" class="w-full" />
                 <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -122,10 +122,14 @@
                 </div>
             </div>
         </div>
-        <div class="my-14">
+        <div class="my-14 ">
             <h1 class="text-4xl font-bold text-center underline underline-offset-[12px]">OUR PRODUCTS</h1>
-            <div class="my-10">
-                <div class="card border w-96  h-[498px] bg-base-100 shadow-xl">
+            <div id="loadingIcon" class=" w-full flex justify-center items-center my-10 text-yellow-400">
+                <span class="loading scale-125 loading-infinity loading-lg"></span>
+            </div>
+            <div id="cardContainer" class="my-10 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center px-5 gap-6 ">
+
+                <!-- <div class="card border w-96  h-[498px] bg-base-100 shadow-xl">
                     <figure>
                         <img id="productImg" src="./images/defaultProductAltImage.png" alt="Shoes" />
                     </figure>
@@ -139,7 +143,9 @@
                             <button id="buyButton" class="btn btn-primary">Buy Now</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+
             </div>
         </div>
         <div>
